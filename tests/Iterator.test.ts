@@ -20,4 +20,14 @@ describe('new iterators', () => {
         .concat([false, 'kek'])
         .toArray(),
     ).toEqual([1, 1, 1, 2, 2, 3, 3, 3, false, 'kek']));
+
+  it('zipLongest', () =>
+    expect(new Iter([1, 1, 1]).zipLongest([2], [3]).toArray()).toEqual([
+      [1, 2, 3],
+      [1, undefined, undefined],
+      [1, undefined, undefined],
+    ]));
+
+  it('zip', () =>
+    expect(new Iter([1, 1, 1]).zip([2, 22], [3, 33]).toArray()).toEqual([[1, 2, 3], [1, 22, 33]]));
 });
