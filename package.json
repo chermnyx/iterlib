@@ -2,6 +2,20 @@
   "name": "iterlib",
   "version": "1.0.0",
   "description": "High-level iterators library for JS",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "22",
+    "@types/node": "^10.5.2",
+    "jest": "22",
+    "ts-jest": "^23.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "typescript": "^2.9.2"
+  }
 }
