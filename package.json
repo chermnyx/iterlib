@@ -1,0 +1,7 @@
+{
+  "name": "iterlib",
+  "version": "1.0.0",
+  "description": "High-level iterators library for JS",
+  "main": "index.js",
+  "license": "MIT"
+}
