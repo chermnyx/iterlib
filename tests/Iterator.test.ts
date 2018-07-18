@@ -1,6 +1,14 @@
 import { Iter } from '../src';
 
-it('Simple', () => expect(new Iter([1, 2, 3]).toArray()).toEqual([1, 2, 3]));
+it('simple', () => expect(new Iter([1, 2, 3]).toArray()).toEqual([1, 2, 3]));
+
+it('promisify', async () => {
+  const arr = [1, 2, 3];
+  const newArrPromise = new Iter(arr).map(async x => x ** 3).promisify();
+
+  expect(newArrPromise).toBeInstanceOf(Promise);
+  expect(await newArrPromise).toEqual(arr.map(x => x ** 3));
+});
 
 describe('all', () => {
   it('false', () => expect(new Iter([0, 1, false]).all()).toBeFalsy());

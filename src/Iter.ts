@@ -15,8 +15,15 @@ export default class Iter<T> implements Iterable<T> {
     return this.iter;
   }
 
-  toArray() {
+  toArray(): T[] {
     return [...this];
+  }
+
+  /**
+   * Equivalent to `Promise.all(this.toArray)`
+   */
+  promisify(): Promise<T[]> {
+    return Promise.all(this.toArray());
   }
 
   /**
