@@ -66,4 +66,23 @@ describe('new iterators', () => {
 
     expect(new Iter([1, 2, 3]).map(x => x ** 2));
   });
+
+  it('slice', () => {
+    const arr = [...Array(10).keys()];
+
+    for (let start = 0; start < arr.length; ++start) {
+      for (let end = 0; end < arr.length; ++end) {
+        expect(new Iter(arr).slice(start, end).toArray()).toEqual(
+          arr.slice(start, end)
+        );
+      }
+    }
+  });
+
+  it('take', () =>
+    expect(new Iter(['0', 2, 3, 10, 5, 'k']).take(3).toArray()).toEqual([
+      '0',
+      2,
+      3,
+    ]));
 });

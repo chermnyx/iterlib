@@ -131,4 +131,26 @@ export default class Iter<T> implements Iterable<T> {
   some(callback: MapCallback<T, boolean>): boolean {
     return this.map(callback).any();
   }
+
+  /**
+   * @returns a portion of an Iter into a new Iter object selected from `begin` to `end` (`end` not included)
+   */
+  slice(begin: number, end?: number): Iter<T> {
+    return new Iter(
+      function*(this: Iter<T>) {
+        for (const [i, item] of this.entries()) {
+          if (i < begin) continue;
+          if (end !== undefined && i >= end) break;
+          yield item;
+        }
+      }.call(this)
+    );
+  }
+
+  /**
+   * Equivalent to `.slice(0, count)`
+   */
+  take(count: number): Iter<T> {
+    return this.slice(0, count);
+  }
 }
