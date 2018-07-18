@@ -9,8 +9,7 @@ export default class Iter<T> implements Iterable<T> {
     this.iter = getIteratotr(iter);
   }
 
-  // tslint:disable-next-line
-  public [Symbol.iterator]() {
+  [Symbol.iterator]() {
     return this.iter;
   }
 
@@ -48,9 +47,8 @@ export default class Iter<T> implements Iterable<T> {
     );
   }
 
-  // tslint:disable-next-line
-  private _zip<U>(longest: boolean, iterables: Iterable<U>[]) {
-    return new Iter<(T | U)[]>(
+  private _zip<U>(longest: boolean, iterables: Iterable<U>[]): Iter<(T | U)[]> {
+    return new Iter(
       // based on https://github.com/fitzgen/wu.js/blob/master/wu.js
       function*(this: Iter<T>) {
         const iters = [getIteratotr(this), ...iterables.map(getIteratotr)];
@@ -67,8 +65,7 @@ export default class Iter<T> implements Iterable<T> {
                 return;
               }
 
-              numFinished += 1;
-              if (numFinished === iters.length) {
+              if (++numFinished === iters.length) {
                 return;
               }
             }
@@ -88,5 +85,14 @@ export default class Iter<T> implements Iterable<T> {
 
   zipLongest<U>(...iters: Iterable<U>[]) {
     return this._zip<U | undefined>(true, iters);
+  }
+
+  entries(): Iter<[number, T]> {
+    return new Iter(
+      function*(this: Iter<T>) {
+        let i = 0;
+        for (const item of this) yield [i++, item];
+      }.call(this),
+    );
   }
 }

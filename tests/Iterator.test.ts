@@ -30,4 +30,7 @@ describe('new iterators', () => {
 
   it('zip', () =>
     expect(new Iter([1, 1, 1]).zip([2, 22], [3, 33]).toArray()).toEqual([[1, 2, 3], [1, 22, 33]]));
+
+  it('entries', () =>
+    expect(new Iter(['1', '2', '3']).entries().toArray()).toEqual([[0, '1'], [1, '2'], [2, '3']]));
 });
