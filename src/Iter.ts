@@ -5,14 +5,10 @@ function getIteratotr<T>(iter: Iterable<T>) {
 type MapCallback<T, U> = (currentValue: T, index: number) => U;
 
 export default class Iter<T> implements Iterable<T> {
-  private iter: Iterator<T>;
+  [Symbol.iterator]: () => Iterator<T>;
 
   constructor(iter: Iterable<T>) {
-    this.iter = getIteratotr(iter);
-  }
-
-  [Symbol.iterator]() {
-    return this.iter;
+    this[Symbol.iterator] = iter[Symbol.iterator].bind(iter);
   }
 
   toArray(): T[] {
@@ -63,7 +59,7 @@ export default class Iter<T> implements Iterable<T> {
     return new Iter(
       // based on https://github.com/fitzgen/wu.js/blob/master/wu.js
       function*(this: Iter<T>) {
-        const iters = [getIteratotr(this), ...iterables.map(getIteratotr)];
+        const iters = [this, ...iterables].map(getIteratotr);
 
         for (;;) {
           let numFinished = 0;
