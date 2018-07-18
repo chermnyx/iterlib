@@ -14,8 +14,6 @@
     "@types/node": "^10.5.2",
     "jest": "22",
     "ts-jest": "^23.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-airbnb": "^5.9.2",
     "typescript": "^2.9.2"
   }
 }
