@@ -12,13 +12,31 @@ describe('any', () => {
   it('true', () => expect(new Iter([0, 1, false]).any()).toBeTruthy());
 });
 
+describe('every', () => {
+  it('true', () =>
+    expect(new Iter(['aa', 'ba']).every(x => x.endsWith('a'))).toBeTruthy());
+  it('false', () =>
+    expect(
+      new Iter(['aa', 'ba', 'ac']).every(x => x.endsWith('a'))
+    ).toBeFalsy());
+});
+
+describe('some', () => {
+  it('true', () =>
+    expect(new Iter(['aa', 'b']).some(x => x.endsWith('a'))).toBeTruthy());
+  it('false', () =>
+    expect(
+      new Iter(['aac', 'bac', 'ac']).some(x => x.endsWith('a'))
+    ).toBeFalsy());
+});
+
 describe('new iterators', () => {
   it('concat', () =>
     expect(
       new Iter([1, 1, 1])
         .concat([2, 2], [3, 3, 3])
         .concat([false, 'kek'])
-        .toArray(),
+        .toArray()
     ).toEqual([1, 1, 1, 2, 2, 3, 3, 3, false, 'kek']));
 
   it('zipLongest', () =>
@@ -29,8 +47,23 @@ describe('new iterators', () => {
     ]));
 
   it('zip', () =>
-    expect(new Iter([1, 1, 1]).zip([2, 22], [3, 33]).toArray()).toEqual([[1, 2, 3], [1, 22, 33]]));
+    expect(new Iter([1, 1, 1]).zip([2, 22], [3, 33]).toArray()).toEqual([
+      [1, 2, 3],
+      [1, 22, 33],
+    ]));
 
   it('entries', () =>
-    expect(new Iter(['1', '2', '3']).entries().toArray()).toEqual([[0, '1'], [1, '2'], [2, '3']]));
+    expect(new Iter(['1', '2', '3']).entries().toArray()).toEqual([
+      [0, '1'],
+      [1, '2'],
+      [2, '3'],
+    ]));
+
+  it('map', () => {
+    expect(
+      new Iter([1, 2, 'kek', null, NaN, {}]).map(String).toArray()
+    ).toEqual(['1', '2', 'kek', 'null', 'NaN', '[object Object]']);
+
+    expect(new Iter([1, 2, 3]).map(x => x ** 2));
+  });
 });

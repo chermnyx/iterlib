@@ -2,6 +2,8 @@ function getIteratotr<T>(iter: Iterable<T>) {
   return iter[Symbol.iterator]();
 }
 
+type MapCallback<T, U> = (currentValue: T, index: number) => U;
+
 export default class Iter<T> implements Iterable<T> {
   private iter: Iterator<T>;
 
@@ -35,19 +37,22 @@ export default class Iter<T> implements Iterable<T> {
   }
 
   /**
-   * combines iterators:
+   * Combines iterators:
    * `cocant([1, 1], [2, 2]) == [1, 1, 2, 2]`
    */
-  concat<U>(...iters: Iterable<U>[]) {
-    return new Iter<T | U>(
+  concat<U>(...iters: Iterable<U>[]): Iter<T | U> {
+    return new Iter(
       function*(this: Iter<T>) {
         yield* this;
         for (const iter of iters) yield* iter;
-      }.call(this),
+      }.call(this)
     );
   }
 
-  private _zip<U>(longest: boolean, iterables: Iterable<U>[]): Iter<(T | U)[]> {
+  private _zip<U>(
+    longest: boolean,
+    iterables: Iterable<U>[]
+  ): Iter<(T | U)[]> {
     return new Iter(
       // based on https://github.com/fitzgen/wu.js/blob/master/wu.js
       function*(this: Iter<T>) {
@@ -75,7 +80,7 @@ export default class Iter<T> implements Iterable<T> {
 
           yield zipped;
         }
-      }.call(this),
+      }.call(this)
     );
   }
 
@@ -87,12 +92,43 @@ export default class Iter<T> implements Iterable<T> {
     return this._zip<U | undefined>(true, iters);
   }
 
+  /**
+   * @returns a new Iter object that contains the key/value pairs for each index in the Iter
+   */
   entries(): Iter<[number, T]> {
     return new Iter(
       function*(this: Iter<T>) {
         let i = 0;
         for (const item of this) yield [i++, item];
-      }.call(this),
+      }.call(this)
     );
+  }
+
+  /**
+   * The map() method creates a new Iter with the results of calling a provided function on every element in the calling Iter
+   * @returns A new Iter with each element being the result of the callback function
+   */
+  map<U>(callback: MapCallback<T, U>): Iter<U> {
+    return new Iter(
+      function*(this: Iter<T>) {
+        for (const [i, val] of this.entries()) yield callback(val, i);
+      }.call(this)
+    );
+  }
+
+  /**
+   * Tests whether all elements in the Iter pass the test implemented by the provided function
+   * @returns `true` if the callback function returns a truthy value for every Iter element; otherwise, `false`
+   */
+  every(callback: MapCallback<T, boolean>): boolean {
+    return this.map(callback).all();
+  }
+
+  /**
+   * Tests whether at least one element in the Iter passes the test implemented by the provided function
+   * @returns `true` if the callback function returns a truthy value for any Iter element; otherwise, `false`
+   */
+  some(callback: MapCallback<T, boolean>): boolean {
+    return this.map(callback).any();
   }
 }
