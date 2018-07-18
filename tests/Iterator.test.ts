@@ -10,6 +10,18 @@ it('promisify', async () => {
   expect(await newArrPromise).toEqual(arr.map(x => x ** 3));
 });
 
+it('exec', () => {
+  const arr = [1, 2, 3];
+  const sqrs: number[] = [];
+
+  new Iter(arr)
+    .map(x => x ** 2)
+    .map(x => sqrs.push(x))
+    .exec();
+
+  expect(sqrs).toEqual(arr.map(x => x ** 2));
+});
+
 describe('all', () => {
   it('false', () => expect(new Iter([0, 1, false]).all()).toBeFalsy());
   it('true', () => expect(new Iter(['2', 1, true]).all()).toBeTruthy());

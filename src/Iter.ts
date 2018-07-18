@@ -16,6 +16,14 @@ export default class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Iterates this object. Useful when combining it with `.map()`
+   */
+  exec(): void {
+    for (const _ of this) {
+    }
+  }
+
+  /**
    * Equivalent to `Promise.all(this.toArray)`
    */
   promisify(): Promise<T[]> {
