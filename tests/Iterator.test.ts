@@ -70,6 +70,16 @@ describe('join', () => {
     expect(new Iter([1, '2', 3]).join()).toBe('1,2,3'));
 });
 
+describe('reduce', () => {
+  it('string', () =>
+    expect(
+      new Iter([1, 2, 3]).reduce((acc, val) => acc + String(val), '')
+    ).toBe('123'));
+
+  it('empty', () =>
+    expect(new Iter<number>([]).reduce((acc, val) => acc + val, 0)).toBe(0));
+});
+
 describe('new iterators', () => {
   it('concat', () =>
     expect(

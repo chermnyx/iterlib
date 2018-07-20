@@ -211,8 +211,8 @@ export default class Iter<T> implements Iterable<T> {
   }
 
   /**
-   * The join() method joins all elements of an Iter into a string and returns this string
-   * @param separator The separator. default to `,`
+   * The `join()` method joins all elements of an Iter into a string and returns this string
+   * @param separator The separator. Default to `,`
    */
   join(separator = ','): string {
     let ret = '';
@@ -223,5 +223,22 @@ export default class Iter<T> implements Iterable<T> {
     }
 
     return ret;
+  }
+
+  /**
+   * The `reduce()` method applies a function against an accumulator and each element in the Iter to reduce it to a single value
+   * @param initialValue The inital value. If no initial value is supplied, the first element in the Iter will be used
+   */
+  reduce<U>(
+    callback: (accumulator: U, currentValue: T, currentIndex: number) => U,
+    initialValue: U
+  ): U | undefined {
+    let val = initialValue;
+
+    for (const [i, item] of this.entries()) {
+      val = callback(val, item, i);
+    }
+
+    return val;
   }
 }
