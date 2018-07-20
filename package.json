@@ -1,5 +1,5 @@
 {
-  "name": "iterlib",
+  "name": "es6-iterlib",
   "version": "1.0.0",
   "repository": "github:Chermnyx/iterlib",
   "description": "High-level iterators library for JS",
