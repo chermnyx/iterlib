@@ -58,7 +58,7 @@ describe('find', () => {
 
 describe('includes', () => {
   it('NaN', () => expect(new Iter([NaN]).includes(NaN)).toBeTruthy());
-  it('false', () => expect(new Iter([]).includes(NaN)).toBeFalsy());
+  it('false', () => expect(new Iter<any>([]).includes(NaN)).toBeFalsy());
   it('true', () => expect(new Iter([1, 2, 3]).includes(3)).toBeTruthy());
 });
 
