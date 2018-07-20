@@ -50,6 +50,18 @@ describe('some', () => {
     ).toBeFalsy());
 });
 
+describe('find', () => {
+  it('defined', () => expect(new Iter([1, 2, 3]).find(x => x == 2)).toBe(2));
+  it('undefined', () =>
+    expect(new Iter([1, 2, 3]).find(x => x == 100)).toBe(undefined));
+});
+
+describe('includes', () => {
+  it('NaN', () => expect(new Iter([NaN]).includes(NaN)).toBeTruthy());
+  it('false', () => expect(new Iter([]).includes(NaN)).toBeFalsy());
+  it('true', () => expect(new Iter([1, 2, 3]).includes(3)).toBeTruthy());
+});
+
 describe('new iterators', () => {
   it('concat', () =>
     expect(
@@ -110,16 +122,4 @@ describe('new iterators', () => {
     expect(
       new Iter([5, 10, 2, 3, 5, 6]).filter((x, i) => i > 1 && x > 2).toArray()
     ).toEqual([3, 5, 6]));
-
-  describe('find', () => {
-    it('defined', () => expect(new Iter([1, 2, 3]).find(x => x == 2)).toBe(2));
-    it('undefined', () =>
-      expect(new Iter([1, 2, 3]).find(x => x == 100)).toBe(undefined));
-  });
-
-  describe('includes', () => {
-    it('NaN', () => expect(new Iter([NaN]).includes(NaN)).toBeTruthy());
-    it('false', () => expect(new Iter([]).includes(NaN)).toBeFalsy());
-    it('true', () => expect(new Iter([1, 2, 3]).includes(3)).toBeTruthy());
-  });
 });
