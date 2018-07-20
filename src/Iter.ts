@@ -1,4 +1,4 @@
-function getIteratotr<T>(iter: Iterable<T>) {
+function getIterator<T>(iter: Iterable<T>) {
   return iter[Symbol.iterator]();
 }
 
@@ -74,7 +74,7 @@ export default class Iter<T> implements Iterable<T> {
     return new Iter(
       // based on https://github.com/fitzgen/wu.js/blob/master/wu.js
       function*(this: Iter<T>) {
-        const iters = [this, ...iterables].map(getIteratotr);
+        const iters = [this, ...iterables].map(getIterator);
 
         for (;;) {
           let numFinished = 0;
