@@ -173,6 +173,13 @@ export default class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Equivalent to `.slice(count)`
+   */
+  skip(count: number): Iter<T> {
+    return this.slice(count);
+  }
+
+  /**
    * @returns a new Iter with all elements that pass the test implemented by the provided function
    */
   filter(callback: MapCallback<T, boolean>): Iter<T> {

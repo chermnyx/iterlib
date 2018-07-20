@@ -136,6 +136,9 @@ describe('new iterators', () => {
       3,
     ]));
 
+  it('skip', () =>
+    expect(new Iter([0, 1, 2, 3, 4]).skip(3).toArray()).toEqual([3, 4]));
+
   it('filter', () =>
     expect(
       new Iter([5, 10, 2, 3, 5, 6]).filter((x, i) => i > 1 && x > 2).toArray()
