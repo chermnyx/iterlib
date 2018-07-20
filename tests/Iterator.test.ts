@@ -110,4 +110,10 @@ describe('new iterators', () => {
     expect(
       new Iter([5, 10, 2, 3, 5, 6]).filter((x, i) => i > 1 && x > 2).toArray()
     ).toEqual([3, 5, 6]));
+
+  describe('find', () => {
+    it('defined', () => expect(new Iter([1, 2, 3]).find(x => x == 2)).toBe(2));
+    it('undefined', () =>
+      expect(new Iter([1, 2, 3]).find(x => x == 100)).toBe(undefined));
+  });
 });

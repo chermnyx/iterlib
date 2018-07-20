@@ -179,4 +179,13 @@ export default class Iter<T> implements Iterable<T> {
       }.call(this)
     );
   }
+
+  /**
+   * @returns the value of the first element in the Iter that satisfies the provided testing function. Otherwise undefined is returned.
+   */
+  find(callback: MapCallback<T, boolean>): T | undefined {
+    for (const [i, item] of this.entries()) {
+      if (callback(item, i)) return item;
+    }
+  }
 }
