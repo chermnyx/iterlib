@@ -164,4 +164,19 @@ export default class Iter<T> implements Iterable<T> {
   take(count: number): Iter<T> {
     return this.slice(0, count);
   }
+
+  /**
+   * @returns a new Iter with all elements that pass the test implemented by the provided function
+   */
+  filter(callback: MapCallback<T, boolean>): Iter<T> {
+    return new Iter(
+      function*(this: Iter<T>) {
+        for (const [i, item] of this.entries()) {
+          if (callback(item, i)) {
+            yield item;
+          }
+        }
+      }.call(this)
+    );
+  }
 }
