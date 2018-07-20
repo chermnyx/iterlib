@@ -62,6 +62,14 @@ describe('includes', () => {
   it('true', () => expect(new Iter([1, 2, 3]).includes(3)).toBeTruthy());
 });
 
+describe('join', () => {
+  it('simple', () =>
+    expect(new Iter([1, 'kek', 2]).join('.')).toBe('1.kek.2'));
+  it('empty', () => expect(new Iter<any>([]).join()).toBe(''));
+  it('no default arg', () =>
+    expect(new Iter([1, '2', 3]).join()).toBe('1,2,3'));
+});
+
 describe('new iterators', () => {
   it('concat', () =>
     expect(

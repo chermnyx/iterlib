@@ -209,4 +209,19 @@ export default class Iter<T> implements Iterable<T> {
 
     return false;
   }
+
+  /**
+   * The join() method joins all elements of an Iter into a string and returns this string
+   * @param separator The separator. default to `,`
+   */
+  join(separator = ','): string {
+    let ret = '';
+
+    for (const [i, item] of this.map(String).entries()) {
+      if (i > 0) ret += separator;
+      ret += item;
+    }
+
+    return ret;
+  }
 }
