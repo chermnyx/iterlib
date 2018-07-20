@@ -23,3 +23,17 @@ export class Range extends Iter<number> {
     super(iter);
   }
 }
+
+export class Caller<T> extends Iter<T> {
+  constructor(callback: () => T, stopValue?: T) {
+    super(
+      (function*() {
+        for (;;) {
+          const val = callback();
+          if (val === stopValue) return;
+          yield val;
+        }
+      })()
+    );
+  }
+}
