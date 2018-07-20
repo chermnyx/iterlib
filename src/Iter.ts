@@ -4,6 +4,13 @@ function getIteratotr<T>(iter: Iterable<T>) {
 
 type MapCallback<T, U> = (currentValue: T, index: number) => U;
 
+function sameValueZero(x: any, y: any): boolean {
+  return (
+    x === y ||
+    (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y))
+  );
+}
+
 export default class Iter<T> implements Iterable<T> {
   [Symbol.iterator]: () => Iterator<T>;
 
@@ -187,5 +194,19 @@ export default class Iter<T> implements Iterable<T> {
     for (const [i, item] of this.entries()) {
       if (callback(item, i)) return item;
     }
+  }
+
+  /**
+   * Determines whether an Iter includes a certain element, returning true or false as appropriate.
+   * It uses the sameValueZero algorithm to determine whether the given element is found
+   */
+  includes(value: T): boolean {
+    for (const item of this) {
+      if (sameValueZero(item, value)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

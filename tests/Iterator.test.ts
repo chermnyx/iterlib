@@ -116,4 +116,10 @@ describe('new iterators', () => {
     it('undefined', () =>
       expect(new Iter([1, 2, 3]).find(x => x == 100)).toBe(undefined));
   });
+
+  describe('includes', () => {
+    it('NaN', () => expect(new Iter([NaN]).includes(NaN)).toBeTruthy());
+    it('false', () => expect(new Iter([]).includes(NaN)).toBeFalsy());
+    it('true', () => expect(new Iter([1, 2, 3]).includes(3)).toBeTruthy());
+  });
 });
