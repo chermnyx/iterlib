@@ -1,6 +1,5 @@
+/*
 !/dist
-node_modules/
-/coverage/
-/package-lock.json
-/.vscode/
-/yarn-error.log
+!/package.json
+!/LICENSE
+!/yarn.lock
