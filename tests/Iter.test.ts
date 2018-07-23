@@ -7,7 +7,8 @@ it('promisify', async () => {
   const newArrPromise = new Iter(arr).map(async x => x ** 3).promisify();
 
   expect(newArrPromise).toBeInstanceOf(Promise);
-  expect(await newArrPromise).toEqual(arr.map(x => x ** 3));
+  const newArr = await newArrPromise;
+  expect(newArr).toEqual(arr.map(x => x ** 3));
 });
 
 it('exec', () => {

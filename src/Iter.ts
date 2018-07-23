@@ -33,7 +33,7 @@ export default class Iter<T> implements Iterable<T> {
   /**
    * Equivalent to `Promise.all(this.toArray)`
    */
-  promisify(): Promise<T[]> {
+  promisify<U>(this: Iter<U | PromiseLike<U>>) {
     return Promise.all(this.toArray());
   }
 
