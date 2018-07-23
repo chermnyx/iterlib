@@ -135,6 +135,13 @@ export default class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Applies the callback to each item of the Iter
+   */
+  forEach(callback: MapCallback<T, void>): void {
+    for (const [i, item] of this.entries()) callback(item, i);
+  }
+
+  /**
    * Tests whether all elements in the Iter pass the test implemented by the provided function
    * @returns `true` if the callback function returns a truthy value for every Iter element; otherwise, `false`
    */

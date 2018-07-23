@@ -11,6 +11,14 @@ it('promisify', async () => {
   expect(newArr).toEqual(arr.map(x => x ** 3));
 });
 
+it('forEach', () => {
+  const arr = [1, 2, 3];
+  const sqrs: number[] = [];
+
+  new Iter(arr).forEach(x => sqrs.push(x ** 2));
+  expect(sqrs).toEqual(arr.map(x => x ** 2));
+});
+
 it('exec', () => {
   const arr = [1, 2, 3];
   const sqrs: number[] = [];
